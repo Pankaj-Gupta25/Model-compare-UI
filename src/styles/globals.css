@@ -242,6 +242,7 @@ body {
 .app-content {
   flex: 1;
   background: #ffffff;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
