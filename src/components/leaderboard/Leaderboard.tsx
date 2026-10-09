@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, Award, ChevronUp, ChevronDown, Minus } from 'lucide-react';
+import { TrendingUp, Award, ChevronUp, ChevronDown } from 'lucide-react';
 import {
   CRITERIA,
   MODELS,

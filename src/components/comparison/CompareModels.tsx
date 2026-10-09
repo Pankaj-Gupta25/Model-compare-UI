@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, ImageIcon, ChevronDown } from 'lucide-react';
+import { Upload, ImageIcon } from 'lucide-react';
 import {
   CRITERIA,
   MODELS,

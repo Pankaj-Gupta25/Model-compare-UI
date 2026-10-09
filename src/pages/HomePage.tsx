@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { ArrowRight, Trophy, GitCompare, BarChart3, Star, Zap } from 'lucide-react';
-import { APP_NAME, APP_TAGLINE, SAMPLE_MODELS } from '../utils/constants';
+import { APP_TAGLINE, SAMPLE_MODELS } from '../utils/constants';
 import './HomePage.css';
 
 const FEATURES = [
@@ -27,11 +28,11 @@ const FEATURES = [
   },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
