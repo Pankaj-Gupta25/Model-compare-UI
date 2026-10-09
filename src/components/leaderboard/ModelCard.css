@@ -1,0 +1,127 @@
+.model-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+}
+
+.model-card--top-1 { border-color: rgba(250, 189, 0, 0.3); }
+.model-card--top-1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(250, 189, 0, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.model-card--top-2 { border-color: rgba(192, 192, 192, 0.3); }
+.model-card--top-3 { border-color: rgba(205, 127, 50, 0.3); }
+
+.model-card__rank {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.model-card__rank-medal { font-size: 1.5rem; }
+.model-card__rank-number {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+  font-family: var(--font-display);
+}
+
+.model-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-right: 2.5rem;
+}
+
+.model-card__name {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.125rem;
+}
+.model-card__provider {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.model-card__overall-score {
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 0.9375rem;
+}
+
+.model-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.model-card__criteria {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.model-card__criterion-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  margin-bottom: 0.25rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.model-card__criterion-bar {
+  height: 5px;
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.model-card__criterion-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.model-card__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.model-card__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.model-card__stat--trend {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.model-card__stat-value {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--color-text-primary);
+}
+
+.model-card__stat-label {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}

@@ -1,0 +1,114 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100; /* Restore high z-index */
+  background: 
+    radial-gradient(ellipse at 40% 100%, rgba(65, 105, 225, 0.4) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 0%, rgba(46, 139, 87, 0.4) 0%, transparent 50%),
+    linear-gradient(90deg, #07212b 0%, #0d2840 40%, #103c3b 100%);
+  border-bottom: none;
+  margin: 0;
+}
+
+/* Subtle dot pattern overlay on navbar for that tech look */
+.navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 10px 10px;
+  pointer-events: none;
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 64px;
+  position: relative;
+  z-index: 1;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.navbar__logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #0d2840;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar__link {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.navbar__link:hover {
+  color: #ffffff;
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.navbar__icon-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color var(--transition-fast);
+}
+.navbar__icon-btn:hover { color: #ffffff; }
+
+.navbar__btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.375rem 1rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.navbar__btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+  .navbar__links { display: none; }
+  /* Hide 'New Eval' button on small screens to prevent overflow */
+  .navbar__right .navbar__btn:first-of-type { display: none; }
+}

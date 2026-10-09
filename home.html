@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ImageBench India</title>
+<style>
+:root{--green:#244c3c;--muted:#69776d;--bg:#f5f6f2;--line:#e1e6df}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font:15px Arial,sans-serif;color:#24352c}
+header{background:#fff;padding:22px 5%;border-bottom:1px solid var(--line)}
+h1{margin:0;color:var(--green);font-size:26px}
+header p{color:var(--muted);margin:7px 0 0}
+nav{display:flex;gap:10px;padding:18px 5%;flex-wrap:wrap}
+button,select{padding:11px 15px;border:1px solid var(--line);border-radius:9px;background:white;cursor:pointer}
+button.active,button:hover{background:var(--green);color:white}
+main{max-width:1050px;margin:auto;padding:8px 5% 40px}
+h2{font-size:24px;margin-bottom:8px}
+.sub{color:var(--muted);line-height:1.6}
+.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:20px;margin:18px 0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.score{font-size:25px;font-weight:bold;color:var(--green)}
+.rank{display:grid;grid-template-columns:48px 1fr 80px;gap:14px;align-items:center}
+.number{background:#e5eee7;padding:14px;border-radius:10px;text-align:center;font-weight:bold}
+.bar{height:9px;background:#edf0eb;border-radius:20px;margin-top:10px;overflow:hidden}
+.fill{height:100%;background:#47795c;border-radius:20px}
+.small{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.product{height:240px;background:#edf0e9;border-radius:10px;display:flex;align-items:center;justify-content:center;text-align:center;color:#7a887d;padding:15px}
+.product img{width:100%;height:100%;object-fit:contain}
+.metric{margin:18px 0}
+.hidden{display:none}
+footer{font-size:12px;color:var(--muted);line-height:1.6;margin-top:22px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.product{height:220px}.rank{grid-template-columns:38px 1fr 65px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>ImageBench India</h1>
+  <p>Finding useful AI-generated product images for Indian small businesses</p>
+</header>
+
+<nav>
+  <button id="leaderBtn" class="active" onclick="showPage('leader')">Leaderboard</button>
+  <button id="compareBtn" onclick="showPage('compare')">Compare models</button>
+</nav>
+
+<main>
+<section id="leader">
+  <h2>Model leaderboard</h2>
+  <p class="sub">Pilot evaluation · 8 participants · 4 prompts · 12 generated images</p>
+  <div class="panel">
+    <label for="metric"><b>Rank by criterion</b></label><br><br>
+    <select id="metric" onchange="renderLeaderboard()">
+      <option value="overall">Overall average</option>
+      <option value="adherence">Prompt adherence</option>
+      <option value="realism">Realism</option>
+      <option value="visual">Visual quality</option>
+      <option value="visibility">Product visibility</option>
+      <option value="business">Business usability</option>
+    </select>
+  </div>
+  <div id="rankings"></div>
+  <div class="panel">
+    <h3>What the results suggest</h3>
+    <p>Nano Banana 2.1 has the highest overall average (3.91/5). Gemini 3.1 Flash Image has the highest visual quality score (4.00/5).</p>
+    <p class="sub">These are exploratory pilot results, not a definitive ranking of all model capabilities.</p>
+  </div>
+</section>
+
+<section id="compare" class="hidden">
+  <h2>Compare model outputs</h2>
+  <p class="sub">Compare two models using the same prompt and rating criterion.</p>
+  <div class="panel">
+    <label for="category"><b>Product category</b></label><br><br>
+    <select id="category" onchange="updatePrompt()">
+      <option>Clothing</option><option>Food</option>
+      <option>Jewellery</option><option>Handicrafts</option>
+    </select>
+    <p id="prompt" class="sub"></p>
+  </div>
+  <div class="grid">
+    <div class="panel">
+      <div class="product"><div><b>Gemini 3.1 Flash Image</b><br><br>Replace with your M1 image<br><span class="small">Click the image area to upload</span><br><br><input type="file" accept="image/*" onchange="loadImage(event,'img1')"></div><img id="img1" class="hidden" alt="M1 generated output"></div>
+      <h3>Gemini 3.1 Flash Image</h3>
+      <div class="score">3.69 / 5</div>
+      <span class="small">Overall pilot average</span>
+    </div>
+    <div class="panel">
+      <div class="product"><div><b>Gemini Nano Banana 2.1</b><br><br>Replace with your M3 image<br><span class="small">Click the image area to upload</span><br><br><input type="file" accept="image/*" onchange="loadImage(event,'img3')"></div><img id="img3" class="hidden" alt="M3 generated output"></div>
+      <h3>Gemini Nano Banana 2.1</h3>
+      <div class="score">3.91 / 5</div>
+      <span class="small">Overall pilot average</span>
+    </div>
+  </div>
+  <div class="panel">
+    <label for="compareMetric"><b>Compare criterion</b></label><br><br>
+    <select id="compareMetric" onchange="renderComparison()">
+      <option value="adherence">Prompt adherence</option>
+      <option value="realism">Realism</option>
+      <option value="visual">Visual quality</option>
+      <option value="visibility">Product visibility</option>
+      <option value="business" selected>Business usability</option>
+    </select>
+    <div id="comparison"></div>
+  </div>
+  <footer>Important: the displayed scores are aggregate pilot averages. They are not category-specific scores. Upload the actual outputs for the selected prompt before using this as visual evidence.</footer>
+</section>
+</main>
+
+<script>
+const models=[
+ {name:"Gemini Nano Banana 2.1",overall:3.91,adherence:3.91,realism:3.84,visual:3.97,visibility:4.00,business:3.81},
+ {name:"Gemini 3.1 Flash Image",overall:3.69,adherence:3.88,realism:3.25,visual:4.00,visibility:3.91,business:3.41},
+ {name:"Gemini 2.5 Flash Image",overall:3.41,adherence:3.44,realism:3.25,visual:3.53,visibility:3.69,business:3.12}
+];
+const labels={overall:"Overall average",adherence:"Prompt adherence",realism:"Realism",visual:"Visual quality",visibility:"Product visibility",business:"Business usability"};
+function showPage(page){
+ document.getElementById("leader").classList.toggle("hidden",page!=="leader");
+ document.getElementById("compare").classList.toggle("hidden",page!=="compare");
+ document.getElementById("leaderBtn").classList.toggle("active",page==="leader");
+ document.getElementById("compareBtn").classList.toggle("active",page==="compare");
+}
+function renderLeaderboard(){
+ const key=document.getElementById("metric").value;
+ const sorted=[...models].sort((a,b)=>b[key]-a[key]);
+ document.getElementById("rankings").innerHTML=sorted.map((m,i)=>`
+  <div class="panel rank">
+   <div class="number">${i+1}</div>
+   <div><b>${m.name}</b><div class="bar"><div class="fill" style="width:${m[key]/5*100}%"></div></div><span class="small">${labels[key]}</span></div>
+   <div class="score">${m[key].toFixed(2)}<span class="small"> / 5</span></div>
+  </div>`).join("");
+}
+const prompts={
+ Clothing:"Indian woman wearing a red embroidered kurta with gold details and white palazzo pants, full outfit, natural proportions, neutral studio background and soft professional lighting.",
+ Food:"Indian butter chicken with naan, basmati rice and mint chutney, realistic textures and proportions, suitable for a food-delivery app.",
+ Jewellery:"Traditional Indian gold necklace with red and green gemstones, complete necklace, neutral luxury background and realistic gold reflections.",
+ Handicrafts:"Handmade terracotta coffee mug with traditional geometric patterns, warm minimal tabletop, realistic texture and clean catalogue presentation."
+};
+function updatePrompt(){
+ document.getElementById("prompt").textContent=prompts[document.getElementById("category").value];
+}
+function renderComparison(){
+ const key=document.getElementById("compareMetric").value;
+ const a=models.find(m=>m.name==="Gemini 3.1 Flash Image")[key];
+ const b=models.find(m=>m.name==="Gemini Nano Banana 2.1")[key];
+ document.getElementById("comparison").innerHTML=[
+  ["Gemini 3.1 Flash Image",a,"#7297b5"],
+  ["Gemini Nano Banana 2.1",b,"#47795c"]
+ ].map(x=>`<div class="metric"><div class="row"><span>${x[0]}</span><b>${x[1].toFixed(2)} / 5</b></div><div class="bar"><div class="fill" style="width:${x[1]/5*100}%;background:${x[2]}"></div></div></div>`).join("")+
+ `<p class="sub">${a===b?"Both models have the same score for this criterion.":(b>a?"Nano Banana 2.1":"Gemini 3.1 Flash Image")+" leads by "+Math.abs(b-a).toFixed(2)+" points for "+labels[key].toLowerCase()+"."}</p>`;
+}
+function loadImage(event,id){
+ const img=document.getElementById(id);
+ img.src=URL.createObjectURL(event.target.files[0]);
+ img.classList.remove("hidden");
+ img.parentElement.querySelector("div").style.display="none";
+}
+renderLeaderboard();updatePrompt();renderComparison();
+</script>
+</body>
+</html>
