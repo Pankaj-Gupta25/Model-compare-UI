@@ -24,7 +24,8 @@
   display: flex;
   align-items: center;
   gap: 2rem;
-  height: 64px;
+  min-height: 80px;
+  padding: 0.5rem 2rem;
   position: relative;
   z-index: 1;
 }

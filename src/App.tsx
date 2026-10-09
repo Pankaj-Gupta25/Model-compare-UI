@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { MainPage } from './pages/MainPage';
+import { BackgroundWave } from './components/layout/BackgroundWave';
 import './styles/globals.css';
 
 const queryClient = new QueryClient({
@@ -17,6 +18,8 @@ function App() {
       <BrowserRouter>
         {/* Outer ambient background */}
         <div className="bg-desktop" aria-hidden="true" />
+        {/* Canvas wave effect */}
+        <BackgroundWave />
 
         <div className="app-window">
           <Navbar />
